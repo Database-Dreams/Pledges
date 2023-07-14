@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>db_dreams:Pledges</id>
+	<name>Pledges</name>
+	<version>1.1.0</version>
+	<type>modification</type>
+	<install for="2.1 - 2.1.99">
+		<!-- Templates, Languages and Images -->
+		<require-dir name="Themes" destination="$boarddir">Theme files</require-dir>
+		<!-- Source Files -->
+		<require-dir name="Sources" destination="$boarddir">Source files</require-dir>
+		<!-- Hooks -->
+		<!--
+			This single hook pre-loads a function.
+			From that function/method, we can call
+			other hooks from within the file and
+			without adding them to the database.
+		-->
+		<hook hook="integrate_pre_load" function="Pledges\Integration::initialize" file="$sourcedir/Pledges/Integration.php" />
+	</install>
+
+	<uninstall for="2.1 - 2.1.99">
+		<!-- Hooks -->
+		<hook hook="integrate_pre_load" function="Pledges\Integration::initialize" file="$sourcedir/Pledges/Integration.php" reverse="true" />
+		<!-- Sources -->
+		<remove-dir name="$sourcedir/Pledges">Source files</remove-dir>
+		<!-- Templates -->
+		<remove-dir name="$themedir/Pledges">Template files</remove-dir>
+		<!-- Languages -->
+		<remove-dir name="$languagedir/Pledges">Language files</remove-dir>
+	</uninstall>
+</package-info>
