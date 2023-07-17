@@ -10,13 +10,9 @@
 		<require-dir name="Themes" destination="$boarddir">Theme files</require-dir>
 		<!-- Source Files -->
 		<require-dir name="Sources" destination="$boarddir">Source files</require-dir>
+		<!-- Database -->
+		<database>install.php</database>
 		<!-- Hooks -->
-		<!--
-			This single hook pre-loads a function.
-			From that function/method, we can call
-			other hooks from within the file and
-			without adding them to the database.
-		-->
 		<hook hook="integrate_pre_load" function="Pledges\Integration::initialize" file="$sourcedir/Pledges/Integration.php" />
 	</install>
 
