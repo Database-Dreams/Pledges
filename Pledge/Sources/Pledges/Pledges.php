@@ -217,11 +217,10 @@ class Pledges
 		$statsquery = $smcFunc['db_query']('', '
 		SELECT SUM(p.pledge_amount) AS total_pledged, COUNT(DISTINCT p.member_id) AS members_pledged, COUNT(p.pledge_id) AS total_pledges
 		FROM {db_prefix}pledges AS p
-		WHERE p.pledge_confirmed = {int:this_confirmed} AND p.can_publish = {int:this_publish}
+		WHERE p.pledge_confirmed = {int:this_confirmed}
 		LIMIT 5',
 				[
 				'this_confirmed' => 1,
-				'this_publish' => 1
 				]
 		);
 		
@@ -293,17 +292,17 @@ class Pledges
 		if (empty($pledge))
 			fatal_error($txt['pledges_no_pledge'], false);
 		
-		$ip = $user_info['ip'];
 		$like_date = time();
+		$type = 'pledge';
 		
 	if ($user_info['is_guest'])
 		fatal_error($txt['pledges_guest_cant_like'], false);
 	else
 	$mem_id = $user_info['id'];
 	
-		$smcFunc['db_query']('', "INSERT INTO {db_prefix}pledge_likes 
-					(member_id, pledge_id, like_date, like_ip)
-					VALUES('$mem_id', '$pledge', '$like_date', '$ip')");
+		$smcFunc['db_query']('', "INSERT INTO {db_prefix}user_likes 
+					(id_member, content_id, like_time, content_type)
+					VALUES('$mem_id', '$pledge', '$like_date', '$type')");
 					
 		//Now Increment Pledge Likes
 		$smcFunc['db_query']('', "UPDATE {db_prefix}pledges

@@ -91,11 +91,12 @@ function UserAddedlikes()
 	$myrow = array();
 	
 	$likequery = $smcFunc['db_query']('', '
-    SELECT l.pledge_id
-	FROM {db_prefix}pledge_likes AS l
-	WHERE l.member_id = {int:this_member}',
+    SELECT l.content_id AS pledge_id
+	FROM {db_prefix}user_likes AS l
+	WHERE l.id_member = {int:this_member} AND l.content_type = {string:this_type}',
 			[
-				'this_member' => $mem_id,
+				'this_member' => (int) $mem_id,
+				'this_type' => (string) 'pledge'
 			]
 		);
 	
