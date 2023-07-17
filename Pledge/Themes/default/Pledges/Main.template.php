@@ -70,6 +70,7 @@ function template_pledges_view()
 	$admin_expenses = 0;
 	$del_image = '';
 	$strow = Array();
+	$likes = '';
 	
 	
 	require_once($sourcedir . '/Pledges/Pledges_module.php');
@@ -153,12 +154,18 @@ function template_pledges_view()
 				$link = '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '" style="color: ' . $row['online_color'] . ';">' . $row['real_name'] . '</a>';
 			else
 				$link = '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['real_name'] . '</a>';
+			
 		}
 		//Has member voted for this Pledge, have they permission and is it there pledge?
 		If (!in_array($row['pledge_id'],$has_voted) && AllowedTo('pledges_can_add_Pledge') && $context['user']['id'] != $row['member_id'])
 			$context['like_link'] = '<a title="" href="'. $scripturl . '?action=pledge;area=pledge;sa=like;pl=' . $row['pledge_id'] . '"><img src="'. $modSettings['pledges_root_url'].$modSettings['pledges_image_folder'] . 'thumb_up.png" alt="Like Pledge" align="absMiddle" /></a>';
 		else
 			$context['like_link'] = '<img src="'. $modSettings['pledges_root_url'].$modSettings['pledges_image_folder'] . 'thumb_up.png" alt="Like Pledge" align="absMiddle" />';
+		
+		if ($row['pledges_likes'])
+			$likes = '<a title="'.$txt['pledges_list_likes_view'].'" href="'. $scripturl . '?action=likes;sa=view;ltype=pledge;like='.$row['pledge_id'].';'. $context['session_var'] . '=' . $context['session_id'] . '">'.$row['pledges_likes'].'</a>';
+		else
+			$likes = $row['pledges_likes'];
 				
 	echo  '<tr class="windowbg">
 			<td style="text-align: left; width: 15%">' . date("d M Y",$row['pledge_date']) . '</td>
