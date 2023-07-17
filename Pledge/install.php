@@ -58,7 +58,7 @@
 					'name' => 'pledger_comment',
 					'type' => 'varchar',
 					'size' => 150,
-					'default' => 'null',
+					'default' => 'NULL',
 				],
 				[
 					'name' => 'can_publish',
@@ -101,7 +101,15 @@
 				],
 				[
 					'type' => 'index',
-					'columns' => ['pledge_id', 'member_id', 'pledge_date']
+					'columns' => ['pledge_id']
+				],
+				[
+					'type' => 'index',
+					'columns' => ['member_id']
+				],
+				[
+					'type' => 'index',
+					'columns' => ['pledge_date']
 				],
 			],
 			'if_exists' => 'ignore',
@@ -155,7 +163,7 @@
 					'size' => 30,
 					'not_null' => true,
 
-				]
+				],
 				[
 					'name' => 'goal_year',
 					'type' => 'smallint',
@@ -184,7 +192,11 @@
 				],
 				[
 					'type' => 'index',
-					'columns' => ['goal_year', 'goal_type_id']
+					'columns' => ['goal_year']
+				],
+				[
+					'type' => 'index',
+					'columns' => ['goal_type_id']
 				],
 			],
 			'if_exists' => 'ignore',
@@ -233,7 +245,11 @@
 				],
 				[
 					'type' => 'index',
-					'columns' => ['goal_id', 'unit_id']
+					'columns' => ['goal_id']
+				],
+				[
+					'type' => 'index',
+					'columns' => ['unit_id']
 				],
 			],
 			'if_exists' => 'ignore',
@@ -303,7 +319,23 @@
 				],
 				[
 					'type' => 'index',
-					'columns' => ['transaction_date', 'transaction_acc_id', 'transaction_type_id', 'credit_amount', 'credit_amount', 'member_id']
+					'columns' => ['transaction_date']
+				],
+				[
+					'type' => 'index',
+					'columns' => ['transaction_acc_id']
+				],
+				[
+					'type' => 'index',
+					'columns' => ['transaction_type_id']
+				],
+				[
+					'type' => 'index',
+					'columns' => ['credit_amount']
+				],
+				[
+					'type' => 'index',
+					'columns' => ['member_id']
 				],
 			],
 			'if_exists' => 'ignore',
