@@ -60,9 +60,8 @@ class Integration
 		// Language
 		loadLanguage('Pledges/Pledges');
 		
-		//Get The Pladges Waiting to be confirmed
-		require_once($sourcedir . '/Pledges/Pledges_module.php');
-		$total_waiting = GetPledgesToBeConfirmed();
+
+		$total_waiting = self::PledgesToBeConfirmed();
 		$total_waiting = ($total_waiting ? ' (' . $total_waiting . ')' : '');
 
 		// Menu Button
@@ -216,6 +215,28 @@ class Integration
 		foreach ($this->_permissions as $permission)
 			$permissionList['membergroup'][$permission] = [false, 'pledges'];
 	}
+
+function PledgesToBeConfirmed()
+{
+	global $smcFunc;
+	
+	
+		$totalquery = $smcFunc['db_query']('', '
+		SELECT p.pledge_id
+		FROM {db_prefix}pledges AS p
+		WHERE p.pledge_confirmed = {int:this_confirmed}',
+				[
+				'this_confirmed' => 0,
+				]
+			);
+		
+		$total = $smcFunc['db_num_rows']($totalquery);
+		$smcFunc['db_free_result']($totalquery);
+	
+
+	
+	return $total;
+}
 
 	/**
 	 * Integration::illegal_guest()
